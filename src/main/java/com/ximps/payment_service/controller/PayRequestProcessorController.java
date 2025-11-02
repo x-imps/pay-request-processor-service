@@ -7,6 +7,7 @@ import com.ximps.payment_service.entity.PayRequest;
 import com.ximps.payment_service.mapper.PayRequestMapper;
 import com.ximps.payment_service.service.PayRequestService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping
+@Slf4j
 public class PayRequestProcessorController {
 
     @Autowired
@@ -31,6 +33,8 @@ public class PayRequestProcessorController {
 
     @PostMapping
     public ResponseEntity<PaymentResponse> startPayment(@RequestBody @Valid PaymentRequest paymentRequest) {
+
+        log.info("Processing payment: "+paymentRequest.getTransactionId());
 
         PayRequest payment = PayRequest.builder()
                 .id(UUID.randomUUID().toString())
